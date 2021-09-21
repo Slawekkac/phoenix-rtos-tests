@@ -119,7 +119,7 @@ class BusyboxTestHarness:
     """Class providing harness for parsing output of the Busybox test suite"""
 
     RESULT = r"(PASS|SKIPPED|FAIL): (.+?)\r+\n"
-    FINAL = r"\*\*\*\*The Busybox Test Suite completed\*\*\*\*\r+\n"
+    FINAL = r"\*\*\*\*(The Busybox Test Suite completed|A single test of the Busybox Test Suite completed)\*\*\*\*\r+\n"
     MESSAGE = r"(.*?)\r+\n"
 
     @staticmethod

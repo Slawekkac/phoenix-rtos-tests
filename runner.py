@@ -65,7 +65,7 @@ def parse_args():
                         help="Specify verbosity level. By default uses level info.")
 
     parser.add_argument("-s", "--serial",
-                        default=config.DEVICE_SERIAL,
+                        default=config.SERIAL_DEVICES.get('armv7m7-imxrt106x'),
                         help="Specify serial to communicate with device board. "
                              "By default uses %(default)s.")
 
@@ -84,7 +84,8 @@ def parse_args():
         # Run on all available targets
         args.target = config.ALL_TARGETS
 
-    config.DEVICE_SERIAL = args.serial
+    if not args.serial:
+        args.serial = config.SERIAL_DEVICES.get(args.target[0])
 
     return args
 

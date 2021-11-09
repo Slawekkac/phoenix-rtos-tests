@@ -40,15 +40,15 @@ DEVICE_TARGETS = ['armv7m7-imxrt106x', 'armv7m7-imxrt117x']
 
 # Ports to communicate with hardware boards
 SERIAL_DEVICES = {
-'armv7m7-imxrt106x': '/dev/serial/by-path/platform-fd500000.pcie-pci-0000:01:00.0-usb-0:1.4:1.1',
-'armv7m7-imxrt117x': '/dev/serial/by-path/platform-fd500000.pcie-pci-0000:01:00.0-usb-0:1.4:1.0-port0'
-}
+                'armv7m7-imxrt106x': '/dev/serial/by-path/platform-fd500000.pcie-pci-0000:01:00.0-usb-0:1.4:1.1',
+                'armv7m7-imxrt117x': '/dev/serial/by-path/platform-fd500000.pcie-pci-0000:01:00.0-usb-0:1.4:1.0-port0'
+                }
 
 DEVICE_USB = '1-1.4'
 # DEVICE_SERIAL USB port addresses, needed only for targets, which use uhubctl
 USB_ADDRESSES = {
-'armv7m7-imxrt106x': '1-1.4'
-}
+                'armv7m7-imxrt106x': '1-1.4'
+                }
 
 
 class ParserError(Exception):

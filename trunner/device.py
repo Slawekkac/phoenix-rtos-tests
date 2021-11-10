@@ -1,7 +1,7 @@
 # Imports of available runners
 from .runners import HostRunner, QemuRunner, IMXRT106xRunner, IMXRT117xRunner
 
-from .config import PHRTOS_PROJECT_DIR, SERIAL_DEVICES, USB_ADDRESSES
+from .config import PHRTOS_PROJECT_DIR, SERIAL_DEVICES, USB_ADDRESSES, PHOENIXD_PORT
 
 
 QEMU_CMD = {
@@ -24,8 +24,8 @@ class RunnerFactory:
         if target == 'host-pc':
             return HostRunner()
         if target == 'armv7m7-imxrt106x':
-            return IMXRT106xRunner((SERIAL_DEVICES.get(target), USB_ADDRESSES.get(target)))
+            return IMXRT106xRunner((SERIAL_DEVICES.get(target), USB_ADDRESSES.get(target)), PHOENIXD_PORT)
         if target == 'armv7m7-imxrt117x':
-            return IMXRT117xRunner(SERIAL_DEVICES.get(target))
+            return IMXRT117xRunner(SERIAL_DEVICES.get(target), PHOENIXD_PORT)
 
         raise ValueError(f"Unknown Runner target: {target}")

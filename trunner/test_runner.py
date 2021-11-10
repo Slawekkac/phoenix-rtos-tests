@@ -56,6 +56,7 @@ class TestsRunner:
         for target, tests in self.tests_per_target.items():
             for test_case in tests:
                 test_case.log_test_started()
+                self.runners[target].status('BUSY')
                 self.runners[target].run(test_case)
                 test_case.log_test_status()
 
@@ -66,5 +67,10 @@ class TestsRunner:
                 passed += int(test.passed())
                 failed += int(test.failed())
                 skipped += int(test.skipped())
+
+            if failed > 0:
+                self.runners[target].status('FAIL')
+            else:
+                self.runners[target].status('SUCCESS')
 
         return passed, failed, skipped

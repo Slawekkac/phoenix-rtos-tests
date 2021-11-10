@@ -25,6 +25,7 @@ from pathlib import Path
 
 from trunner.config import PHRTOS_PROJECT_DIR
 from trunner.tools.color import Color
+from abc import ABC, abstractmethod
 
 
 _BOOT_DIR = PHRTOS_PROJECT_DIR / '_boot'
@@ -309,10 +310,17 @@ class PloTalker:
 class Runner:
     """Common interface for test runners"""
 
+    @abstractmethod
+    def status(self, status):
+        """Method for sygnalising a current runner status: busy/failed/succeeded"""
+        pass
+
+    @abstractmethod
     def flash(self):
         """Method used for flashing a device with the image containing tests."""
         pass
 
+    @abstractmethod
     def run(self, test):
         """Method used for running a single test case which is represented by TestCase class."""
         pass
@@ -328,23 +336,20 @@ class DeviceRunner(Runner):
     def __init__(self, port):
         self.port = port
         self.serial = None
-        self.ledr_gpio = GPIO(13)
-        self.ledg_gpio = GPIO(18)
-        self.ledb_gpio = GPIO(12)
-        self.ledb_gpio.high()
+        self.leds = {'red': GPIO(13), 'green': GPIO(18), 'blue': GPIO(12)}
+        self.status_color = {'BUSY': 'blue', 'SUCCESS': 'green', 'FAIL': 'red'}
 
-    def led(self, color, state="on"):
-        if state == "on" or state == "off":
-            self.ledr_gpio.low()
-            self.ledg_gpio.low()
-            self.ledb_gpio.low()
-        if state == "on":
-            if color == "red":
-                self.ledr_gpio.high()
-            if color == "green":
-                self.ledg_gpio.high()
-            if color == "blue":
-                self.ledb_gpio.high()
+        self.leds['blue'].high()
+
+    def status(self, status):
+        if status in self.status_color:
+            self.set_led(self.status_color[status])
+
+    def set_led(self, color):
+        if color in self.leds:
+            for led_gpio in self.leds.values():
+                led_gpio.low()
+            self.leds[color].high()
 
     def run(self, test):
         if test.skipped():
@@ -365,8 +370,8 @@ class DeviceRunner(Runner):
             self.serial.close()
 
 
-class ARMV7M7Runner(DeviceRunner):
-    """This class provides interface to run tests on targets with armv7m7 processor"""
+class ARMV7M7Runner(DeviceRunner, ABC):
+    """This class provides interface to run tests on targets with armv7m7 architecture"""
 
     def __init__(
         self,
@@ -377,9 +382,7 @@ class ARMV7M7Runner(DeviceRunner):
         self.flash_memory = 0
         super().__init__(port)
 
-    def led(self, color, state="on"):
-        super().led(color=color, state=state)
-
+    @abstractmethod
     def reboot(self, serial_downloader=False, cut_power=False):
         pass
 

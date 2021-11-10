@@ -20,11 +20,7 @@ class IMXRT117xRunner(ARMV7M7Runner):
     SDP = 'plo-ram-armv7m7-imxrt117x.sdp'
     IMAGE = 'phoenix-armv7m7-imxrt117x.disk'
 
-    def __init__(
-        self,
-        port,
-        phoenixd_port='/dev/serial/by-id/usb-Phoenix_Systems_plo_CDC_ACM-if00',
-    ):
+    def __init__(self, port, phoenixd_port):
         super().__init__(port)
         self.phoenixd_port = phoenixd_port
         self.is_cut_power_used = True
@@ -33,11 +29,7 @@ class IMXRT117xRunner(ARMV7M7Runner):
         self.power_gpio.high()
         self.boot_gpio = GPIO(4)
 
-    def led(self, color, state="on"):
-        super().led(color=color, state=state)
-
     def _restart_by_poweroff(self):
-
         self.power_gpio.low()
         time.sleep(0.500)
         self.power_gpio.high()
@@ -48,8 +40,4 @@ class IMXRT117xRunner(ARMV7M7Runner):
             self.boot_gpio.high()
         else:
             self.boot_gpio.low()
-
         self._restart_by_poweroff()
-
-    def run(self, test):
-        super().run(test)

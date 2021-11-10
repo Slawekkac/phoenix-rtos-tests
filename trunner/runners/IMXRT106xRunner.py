@@ -23,12 +23,7 @@ class IMXRT106xRunner(ARMV7M7Runner):
     SDP = 'plo-ram-armv7m7-imxrt106x.sdp'
     IMAGE = 'phoenix-armv7m7-imxrt106x.disk'
 
-    def __init__(
-        self,
-        port,
-        phoenixd_port='/dev/serial/by-id/usb-Phoenix_Systems_plo_CDC_ACM-if00',
-        is_cut_power_used=False,
-    ):
+    def __init__(self, port, phoenixd_port, is_cut_power_used=False):
         super().__init__(port[0])
         self.port_usb = port[1]
         self.phoenixd_port = phoenixd_port
@@ -39,9 +34,6 @@ class IMXRT106xRunner(ARMV7M7Runner):
         self.power_gpio = GPIO(2)
         self.power_gpio.high()
         self.boot_gpio = GPIO(4)
-
-    def led(self, color, state="on"):
-        super().led(color=color, state=state)
 
     def _restart_by_jtag(self):
         self.reset_gpio.low()
@@ -74,6 +66,3 @@ class IMXRT106xRunner(ARMV7M7Runner):
             self._restart_by_poweroff()
         else:
             self._restart_by_jtag()
-
-    def run(self, test):
-        super().run(test)

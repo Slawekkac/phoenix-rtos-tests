@@ -319,11 +319,32 @@ class Runner:
 
 
 class DeviceRunner(Runner):
-    """This class provides interface to run test case using serial port"""
+    """This class provides interface to run tests on hardware targets using serial port
+       Hardware targets are run on Rpi
+       GPIO 13 must be connected to a red LED
+       GPIO 18 must be connected to a green LED
+       GPIO 12 must be connected to a blue LED"""
 
     def __init__(self, port):
         self.port = port
         self.serial = None
+        self.ledr_gpio = GPIO(13)
+        self.ledg_gpio = GPIO(18)
+        self.ledb_gpio = GPIO(12)
+        self.ledb_gpio.high()
+
+    def led(self, color, state="on"):
+        if state == "on" or state == "off":
+            self.ledr_gpio.low()
+            self.ledg_gpio.low()
+            self.ledb_gpio.low()
+        if state == "on":
+            if color == "red":
+                self.ledr_gpio.high()
+            if color == "green":
+                self.ledg_gpio.high()
+            if color == "blue":
+                self.ledb_gpio.high()
 
     def run(self, test):
         if test.skipped():
@@ -357,17 +378,7 @@ class ARMV7M7Runner(DeviceRunner):
         super().__init__(port)
 
     def led(self, color, state="on"):
-        if state == "on" or state == "off":
-            self.ledr_gpio.low()
-            self.ledg_gpio.low()
-            self.ledb_gpio.low()
-        if state == "on":
-            if color == "red":
-                self.ledr_gpio.high()
-            if color == "green":
-                self.ledg_gpio.high()
-            if color == "blue":
-                self.ledb_gpio.high()
+        super().led(color=color, state=state)
 
     def reboot(self, serial_downloader=False, cut_power=False):
         pass

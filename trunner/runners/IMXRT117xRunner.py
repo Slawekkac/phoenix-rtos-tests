@@ -15,10 +15,7 @@ from .common import ARMV7M7Runner, GPIO
 class IMXRT117xRunner(ARMV7M7Runner):
     """This class provides interface to run test case on IMXRT117x using RaspberryPi.
        GPIO 4 must be connected to the pin 4 in P1 Header (using a resistor 3,3k).
-       GPIO 2 must be connected to an appropriate IN pin in relay module
-       GPIO 13 must be connected to a red LED
-       GPIO 18 must be connected to a green LED
-       GPIO 12 must be connected to a blue LED"""
+       GPIO 2 must be connected to an appropriate IN pin in relay module"""
 
     SDP = 'plo-ram-armv7m7-imxrt117x.sdp'
     IMAGE = 'phoenix-armv7m7-imxrt117x.disk'
@@ -35,10 +32,6 @@ class IMXRT117xRunner(ARMV7M7Runner):
         self.power_gpio = GPIO(2)
         self.power_gpio.high()
         self.boot_gpio = GPIO(4)
-        self.ledr_gpio = GPIO(13)
-        self.ledg_gpio = GPIO(18)
-        self.ledb_gpio = GPIO(12)
-        self.ledb_gpio.high()
 
     def led(self, color, state="on"):
         super().led(color=color, state=state)

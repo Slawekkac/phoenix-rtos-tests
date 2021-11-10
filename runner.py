@@ -98,6 +98,7 @@ def print_summary_successed(runner):
 
 def print_summary_failed(runner):
     print("Failed!")
+
     if 'armv7m7-imxrt106x' in runner.targets:
         runner.runners['armv7m7-imxrt106x'].led('red', 'on')
 

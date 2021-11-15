@@ -1,6 +1,7 @@
-from psh.tools.basic import run_psh, assert_only_prompt
+from psh.tools.basic import Psh
 
 
 def harness(p):
-    run_psh(p)
-    assert_only_prompt(p)
+    psh = Psh(p)
+    psh.run()
+    psh.assert_only_prompt()

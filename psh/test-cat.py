@@ -12,10 +12,9 @@
 # %LICENSE%
 #
 
-from psh.tools.basic import run_psh, assert_only_prompt
+from psh.tools.basic import Psh
 
 PROMPT = r'\r\x1b\[0J' + r'\(psh\)% '
-EOL = r'(\r+)\n'
 
 
 def is_hardware_target(p):
@@ -34,42 +33,40 @@ def is_hardware_target(p):
         return False
 
 
-def assert_cat_err(p):
+def assert_cat_err():
     fname = 'nonexistentFile'
     cmd = f'cat {fname}'
     statement = f'cat: {fname} no such file'
 
-    p.sendline(cmd)
-    p.expect(cmd + EOL + statement + EOL + PROMPT)
+    psh.assert_expected(input=cmd, expected=statement)
 
 
-def assert_cat_h(p):
+def assert_cat_h():
     cmd = 'cat -h'
     help = r'Usage: cat \[options\] \[files\](\r+)\n' \
         + r'  -h:  shows this help message'
 
-    p.sendline(cmd)
-    p.expect(cmd + EOL + help + EOL + PROMPT)
+    psh.assert_expected(input=cmd, expected=help)
 
 
-def assert_cat_shells(p):
+def assert_cat_shells():
     fname = 'etc/shells'
     fcontent = '# /etc/shells: valid login shells(\r+)\n/bin/sh'
     cmd = f'cat {fname}'
 
-    p.sendline(cmd)
-    p.expect(cmd + EOL + fcontent + EOL + PROMPT)
+    psh.assert_expected(input=cmd, expected=fcontent)
 
 
 def harness(p):
-
-    run_psh(p)
-    assert_only_prompt(p)
+    global psh
+    psh = Psh(p)
+    psh.run()
+    psh.assert_only_prompt()
 
     # need to add more test cases when it will be possible to write content to the file
-    assert_cat_err(p)
-    assert_cat_h(p)
+    assert_cat_err()
+    assert_cat_h()
 
     # there are no files on imxrt106x target that can be written out
     if not is_hardware_target(p):
-        assert_cat_shells(p)
+        assert_cat_shells()

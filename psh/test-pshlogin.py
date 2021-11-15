@@ -16,7 +16,7 @@ import string
 
 import pexpect
 
-from psh.tools.basic import run_psh, assert_only_prompt
+from psh.tools.basic import Psh
 
 import psh.tools.login as logintools
 
@@ -41,8 +41,9 @@ def assert_pshlogin(p):
 
 def harness(p):
     # Run psh
-    run_psh(p)
-    assert_only_prompt(p)
+    psh = Psh(p)
+    psh.run()
+    psh.assert_only_prompt()
 
     # Run pshlogin
     assert_pshlogin(p)

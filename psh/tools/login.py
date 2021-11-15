@@ -16,7 +16,7 @@ from collections import namedtuple
 
 import pexpect
 
-from psh.tools.basic import assert_prompt, assert_prompt_fail
+from psh.tools.basic import Psh
 
 
 Credentials = namedtuple('Credentials', 'user passwd')
@@ -24,6 +24,8 @@ pshlogin_cmd = '/bin/pshlogin'
 
 
 def log_in(p, login, passwd):
+    global psh
+    psh = Psh(p)
     p.send(login + '\n')
     assert p.expect_exact([login, pexpect.TIMEOUT]) == 0, 'Cannot enter login to login prompt'
     assert p.expect_exact(["Password:", pexpect.TIMEOUT]) == 0
@@ -32,12 +34,12 @@ def log_in(p, login, passwd):
 
 def assert_login(p, login, passwd):
     log_in(p, login, passwd)
-    assert_prompt(p, 'Login should pass but failed', timeout=1)
+    psh.assert_prompt(msg='Login should pass but failed', timeout=1)
 
 
 def assert_login_fail(p, login, passwd):
     log_in(p, login, passwd)
-    assert_prompt_fail(p, 'Login should fail but passed', timeout=1)
+    psh.assert_prompt_fail(msg='Login should fail but passed', timeout=1)
 
 
 def assert_login_empty(p, login):

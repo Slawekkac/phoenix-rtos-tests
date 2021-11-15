@@ -11,7 +11,7 @@
 #
 # %LICENSE%
 #
-from psh.tools.basic import run_psh, assert_only_prompt, assert_prompt
+from psh.tools.basic import Psh
 
 
 TAB = '\x09'
@@ -21,13 +21,13 @@ ENTER = '\x0D'
 def mkdir(p, path):
     p.send('mkdir ' + path + ENTER)
     p.expect_exact('mkdir ' + path)
-    assert_prompt(p, msg='Cannot make directory: ' + path, timeout=1)
+    psh.assert_prompt(msg='Cannot make directory: ' + path, timeout=1)
 
 
 def touch(p, path):
     p.send('touch ' + path + ENTER)
     p.expect_exact('touch ' + path)
-    assert_prompt(p, msg='Cannot make file: ' + path, timeout=1)
+    psh.assert_prompt(msg='Cannot make file: ' + path, timeout=1)
 
 
 def assert_completion(p, comptab):
@@ -37,7 +37,7 @@ def assert_completion(p, comptab):
         p.send(TAB)
         p.expect_exact(suffix)
     p.send(ENTER)
-    assert_prompt(p, 'No prompt after completion test', timeout=1)
+    psh.assert_prompt(msg='No prompt after completion test', timeout=1)
 
 
 def assert_hints(p, path, hints):
@@ -47,12 +47,14 @@ def assert_hints(p, path, hints):
     for h in hints:
         p.expect_exact(h)
     p.send(ENTER)
-    assert_prompt(p, 'No prompt after hints test', timeout=1)
+    psh.assert_prompt(msg='No prompt after hints test', timeout=1)
 
 
 def harness(p):
-    run_psh(p)
-    assert_only_prompt(p)
+    global psh
+    psh = Psh(p)
+    psh.run()
+    psh.assert_only_prompt()
 
     mkdir(p, 'etc')
 

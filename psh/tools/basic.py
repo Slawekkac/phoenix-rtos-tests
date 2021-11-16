@@ -14,9 +14,10 @@
 #
 
 import pexpect
-import re
+from trunner.config import CURRENT_TARGET, DEVICE_TARGETS
 
-PROMPT = r'\r\x1b\[0J' + r'\(psh\)% '
+# psh prompt and end of line regex
+PROMPT = r'(\r+)\x1b\[0J' + r'\(psh\)% '
 EOL = r'(\r+)\n'
 
 
@@ -25,15 +26,14 @@ class Psh:
     def __init__(self, pexpect_proc):
         self.p = pexpect_proc
 
-    def assert_expected(self, input, expected, msg=''):
+    def assert_expected(self, input='', expected='', msg=''):
         self.p.sendline(input)
-        expected = input + EOL + expected + EOL + PROMPT
+        # if there is no expected output, don't add EOL to it
+        if expected != '':
+            expected = expected + EOL
+        expected = input + EOL + expected + PROMPT
         msg = f'Expected output regex was: \n---\n{expected}\n---\n' + msg
         assert self.p.expect([expected, pexpect.TIMEOUT]) == 0, msg
-
-    def run(self):
-        self.p.send('psh\r\n')
-        self.p.expect(r'psh(\r+)\n')
 
     def assert_only_prompt(self):
         # Expect an erase in display ascii escape sequence and a prompt sign
@@ -60,3 +60,24 @@ class Psh:
         patterns = ['(psh)% ', pexpect.TIMEOUT]
         idx = self.p.expect_exact(patterns, timeout=timeout)
         assert idx == 1, msg
+
+    def assert_exec(self, program='', expected='', msg=''):
+        if CURRENT_TARGET in DEVICE_TARGETS:
+            exec_cmd = f'sysexec {program}'
+        else:
+            exec_cmd = f'/bin/{program}'
+
+        self.assert_expected(exec_cmd, expected, msg)
+
+    def exec_prog(self, prog=''):
+        self.assert_exec(program=prog)
+
+    def send_cmd(self, cmd):
+        self.assert_expected(input=cmd)
+
+    def run(self):
+        self.p.send('psh\r\n')
+        self.p.expect(r'psh(\r+)\n')
+
+    def get_target(self):
+        return CURRENT_TARGET

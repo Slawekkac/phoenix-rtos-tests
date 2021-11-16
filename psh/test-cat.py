@@ -17,22 +17,6 @@ from psh.tools.basic import Psh
 PROMPT = r'\r\x1b\[0J' + r'\(psh\)% '
 
 
-def is_hardware_target(p):
-    cmd = 'ls'
-
-    p.sendline(cmd)
-    p.expect(cmd)
-    idx = p.expect([
-            'syspage',
-            'bin'])
-    p.expect(PROMPT)
-
-    if idx == 0:
-        return True
-    elif idx == 1:
-        return False
-
-
 def assert_cat_err():
     fname = 'nonexistentFile'
     cmd = f'cat {fname}'
@@ -67,6 +51,6 @@ def harness(p):
     assert_cat_err()
     assert_cat_h()
 
-    # there are no files on imxrt106x target that can be written out
-    if not is_hardware_target(p):
+    # only on ia32-generic target are files that can be written out
+    if psh.get_target() == 'ia32-generic':
         assert_cat_shells()

@@ -2,13 +2,13 @@
 
 #include "unity_fixture.h"
 
-#ifdef UNITY_INCLUDE_FLOAT
+//#ifndef UNITY_INCLUDE_FLOAT
 #define UNITY_INCLUDE_FLOAT
-#endif
+//#endif
 
-#ifdef UNITY_INCLUDE_DOUBLE
+//#ifndef UNITY_INCLUDE_DOUBLE
 #define UNITY_INCLUDE_DOUBLE
-#endif
+//#endif
 
 TEST_GROUP(test_sin);
 
@@ -32,12 +32,12 @@ TEST(test_sin, sinus_1_6_pi)
 
 TEST(test_sin, sinus_1_4_pi)
 {
-    TEST_ASSERT_EQUAL_DOUBLE(sqrt(2)/2, sin(M_PI / 4.0));
+    TEST_ASSERT_EQUAL_DOUBLE(sqrt(2) / 2, sin(M_PI / 4.0));
 }
 
 TEST(test_sin, sinus_1_3_pi)
 {
-    TEST_ASSERT_EQUAL_DOUBLE(sqrt(3)/2, sin(M_PI / 3.0));
+    TEST_ASSERT_EQUAL_DOUBLE(sqrt(3) / 2, sin(M_PI / 3.0));
 }
 
 TEST(test_sin, sinus_1_2_pi)
@@ -52,7 +52,7 @@ TEST(test_sin, sinus_1_pi)
 
 TEST(test_sin, sinus_2_pi)
 {
-    TEST_ASSERT_EQUAL_DOUBLE(0.0, sin(2*M_PI));
+    TEST_ASSERT_EQUAL_DOUBLE(0.0, sin(2 * M_PI));
 }
 
 TEST_GROUP_RUNNER(test_sinus_with_normal_values) 

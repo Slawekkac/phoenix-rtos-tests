@@ -3,7 +3,6 @@
 #include "unity_fixture.h"
 
 
-
 #ifdef UNITY_INCLUDE_FLOAT
 #define UNITY_INCLUDE_FLOAT
 #endif
@@ -11,10 +10,6 @@
 #ifdef UNITY_INCLUDE_DOUBLE
 #define UNITY_INCLUDE_DOUBLE
 #endif
-
-//#define UNITY_EXCLUDE_FLOAT
-//#define UNITY_INCLUDE_DOUBLE
-//#define UNITY_DOUBLE_PRECISION
 
 
 TEST_GROUP(test_sin);
@@ -52,14 +47,40 @@ TEST(test_sin, sinus_1_2_pi)
     TEST_ASSERT_EQUAL_DOUBLE(1.0, sin(M_PI / 2.0));
 }
 
+/*
+Test function sin for radius angle = Pi
+Expected value 0.0 but result is 1.2246468e-16
+*/
 TEST(test_sin, sinus_1_pi)
 {
     TEST_ASSERT_EQUAL_DOUBLE(0.0, sin(M_PI));
 }
 
+/*
+Test function sin for radius angle = 2*Pi
+Expected value 0.0 but result is -2.4492936e-16
+*/
 TEST(test_sin, sinus_2_pi)
 {
     TEST_ASSERT_EQUAL_DOUBLE(0.0, sin(2 * M_PI));
+}
+
+/*
+Test function sin for radius angle = 4*Pi
+Expected value 0.0 but result is 
+*/
+TEST(test_sin, sinus_4_pi)
+{
+    TEST_ASSERT_EQUAL_DOUBLE(0.0, sin(4 * M_PI));
+}
+
+/*
+Test function sin for radius angle = 8*Pi
+Expected value 0.0 but result is 
+*/
+TEST(test_sin, sinus_8_pi)
+{
+    TEST_ASSERT_EQUAL_DOUBLE(0.0, sin(8 * M_PI));
 }
 
 TEST_GROUP_RUNNER(test_sinus_with_normal_values) 
@@ -71,6 +92,8 @@ TEST_GROUP_RUNNER(test_sinus_with_normal_values)
     RUN_TEST_CASE(test_sin, sinus_1_2_pi);
     RUN_TEST_CASE(test_sin, sinus_1_pi);
     RUN_TEST_CASE(test_sin, sinus_2_pi);
+    RUN_TEST_CASE(test_sin, sinus_4_pi);
+    RUN_TEST_CASE(test_sin, sinus_8_pi);
 }
 
 void runner(void)

@@ -1,5 +1,6 @@
 #include <math.h>
 #include <stdio.h>
+#include <float.h>
 
 #include "unity_fixture.h"
 
@@ -43,8 +44,9 @@ TEST(test_sin, sinus_1_4_pi_t2)
     double val1 = 0.70710678118654752440084436210485;
     char buff_msg[128];
 
-    sprintf(buff_msg, "Value for sqrt(2)/2: %lf", val1);
-    TEST_MESSAGE(buff_msg);
+    //sprintf(buff_msg, "Value for sqrt(2)/2: %lf", val1);
+    //TEST_MESSAGE(buff_msg);
+    fprintf(stderr, "Value for sqrt(2)/2: %lf\n", val1);
     TEST_ASSERT_EQUAL_DOUBLE(val1, sin(M_PI / 4.0));
 }
 

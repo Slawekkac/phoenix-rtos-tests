@@ -2,17 +2,11 @@
 
 #include "unity_fixture.h"
 
-//#ifdef UNITY_INCLUDE_FLOAT
-//#define UNITY_INCLUDE_FLOAT
-//#endif
 
-//#ifdef UNITY_INCLUDE_DOUBLE
-//#define UNITY_INCLUDE_DOUBLE
-//#endif
-
-#ifndef UNITY_DOUBLE_PRECISION
+#define UNITY_EXCLUDE_FLOAT
+#define UNITY_INCLUDE_DOUBLE
 #define UNITY_DOUBLE_PRECISION
-#endif
+
 
 TEST_GROUP(test_sin);
 

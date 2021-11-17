@@ -115,6 +115,44 @@ TEST(test_sin, sinus_16_pi_delta)
     TEST_ASSERT_DOUBLE_WITHIN(-1.0e-15, 0.0, sin(16 * M_PI));
 }
 
+/*
+Test for float
+*/
+
+TEST(test_sin, sinus_0_pi_fl)
+{
+    TEST_ASSERT_EQUAL_FLOAT(0.0, sin(0.0));
+}
+
+TEST(test_sin, sinus_1_6_pi_fl)
+{
+    TEST_ASSERT_EQUAL_FLOAT(0.5, sin(M_PI / 6.0));
+}
+
+TEST(test_sin, sinus_1_4_pi_fl)
+{
+    TEST_ASSERT_EQUAL_FLOAT(sqrt(2) / 2, sin(M_PI / 4.0));
+}
+
+TEST(test_sin, sinus_1_3_pi_fl)
+{
+    TEST_ASSERT_EQUAL_FLOAT(sqrt(3) / 2, sin(M_PI / 3.0));
+}
+
+TEST(test_sin, sinus_1_2_pi_fl)
+{
+    TEST_ASSERT_EQUAL_FLOAT(1.0, sin(M_PI / 2.0));
+}
+
+/*
+Test function sin for radius angle = Pi
+Expected value 0.0 but result is 
+*/
+TEST(test_sin, sinus_1_pi_fl)
+{
+    TEST_ASSERT_EQUAL_FLOAT(0.0, sin(M_PI));
+}
+
 TEST_GROUP_RUNNER(test_sinus_with_normal_values) 
 {
     RUN_TEST_CASE(test_sin, sinus_0_pi);
@@ -131,9 +169,21 @@ TEST_GROUP_RUNNER(test_sinus_with_normal_values)
     RUN_TEST_CASE(test_sin, sinus_16_pi_delta);
 }
 
+TEST_GROUP_RUNNER(test_fl_sinus_with_normal_values) 
+{
+    RUN_TEST_CASE(test_sin, sinus_0_pi_fl);
+    RUN_TEST_CASE(test_sin, sinus_1_6_pi_fl);
+    RUN_TEST_CASE(test_sin, sinus_1_4_pi_fl);
+    RUN_TEST_CASE(test_sin, sinus_1_3_pi_fl);
+    RUN_TEST_CASE(test_sin, sinus_1_2_pi_fl);
+    RUN_TEST_CASE(test_sin, sinus_1_pi_fl);
+    
+}
+
 void runner(void)
 {
 	RUN_TEST_GROUP(test_sinus_with_normal_values);
+    RUN_TEST_GROUP(test_fl_sinus_with_normal_values);
 }
 
 int main(int argc, char *argv[])

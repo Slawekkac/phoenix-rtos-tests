@@ -95,11 +95,23 @@ TEST(test_sin, sinus_8_pi_delta)
 
 /*
 Test function sin for radius angle = 16*Pi
-Expected value 0.0 but result is 
+Expected value 0.0 but result is -1.95943488e-15
 */
 TEST(test_sin, sinus_16_pi)
 {
     TEST_ASSERT_EQUAL_DOUBLE(0.0, sin(16 * M_PI));
+}
+
+/*
+Test function sin for radius angle = 16*Pi
+Expected value 0.0 but result is -1.95943488e-15
+So delta should be greather than -1.0e-15
+Now we check then
+Double precision is set to (1e-12)
+*/
+TEST(test_sin, sinus_16_pi_delta)
+{
+    TEST_ASSERT_DOUBLE_WITHIN(-1.0e-15, 0.0, sin(16 * M_PI));
 }
 
 TEST_GROUP_RUNNER(test_sinus_with_normal_values) 
@@ -115,6 +127,7 @@ TEST_GROUP_RUNNER(test_sinus_with_normal_values)
     RUN_TEST_CASE(test_sin, sinus_8_pi);
     RUN_TEST_CASE(test_sin, sinus_8_pi_delta);
     RUN_TEST_CASE(test_sin, sinus_16_pi);
+    RUN_TEST_CASE(test_sin, sinus_16_pi_delta);
 }
 
 void runner(void)

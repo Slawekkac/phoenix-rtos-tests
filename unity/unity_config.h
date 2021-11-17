@@ -3,4 +3,7 @@
 
 #define UNITY_FIXTURE_NO_EXTRAS
 
+#define UNITY_INCLUDE_FLOAT
+#define UNITY_INCLUDE_DOUBLE
+
 #endif /* UNITY_CONFIG_H */

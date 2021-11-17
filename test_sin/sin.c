@@ -67,7 +67,7 @@ TEST(test_sin, sinus_2_pi)
 
 /*
 Test function sin for radius angle = 4*Pi
-Expected value 0.0 but result is 
+Expected value 0.0 but result is -4.8985872e-16
 */
 TEST(test_sin, sinus_4_pi)
 {
@@ -76,11 +76,30 @@ TEST(test_sin, sinus_4_pi)
 
 /*
 Test function sin for radius angle = 8*Pi
-Expected value 0.0 but result is 
+Expected value 0.0 but result is -9.79717439e-16
 */
 TEST(test_sin, sinus_8_pi)
 {
     TEST_ASSERT_EQUAL_DOUBLE(0.0, sin(8 * M_PI));
+}
+
+/*
+Test function sin for radius angle = 8*Pi
+Expected value 0.0 but result is -9.79717439e-16
+Check test with delta
+*/
+TEST(test_sin, sinus_8_pi_delta)
+{
+    TEST_ASSERT_DOUBLE_WITHIN(-1.0e-15, 0.0, sin(8 * M_PI));
+}
+
+/*
+Test function sin for radius angle = 16*Pi
+Expected value 0.0 but result is 
+*/
+TEST(test_sin, sinus_16_pi)
+{
+    TEST_ASSERT_EQUAL_DOUBLE(0.0, sin(16 * M_PI));
 }
 
 TEST_GROUP_RUNNER(test_sinus_with_normal_values) 
@@ -94,6 +113,8 @@ TEST_GROUP_RUNNER(test_sinus_with_normal_values)
     RUN_TEST_CASE(test_sin, sinus_2_pi);
     RUN_TEST_CASE(test_sin, sinus_4_pi);
     RUN_TEST_CASE(test_sin, sinus_8_pi);
+    RUN_TEST_CASE(test_sin, sinus_8_pi_delta);
+    RUN_TEST_CASE(test_sin, sinus_16_pi);
 }
 
 void runner(void)

@@ -108,6 +108,7 @@ Expected value 0.0 but result is -1.95943488e-15
 So delta should be greather than -1.0e-15
 Now we check then
 Double precision is set to (1e-12)
+Change precision to value (1e-15)
 */
 TEST(test_sin, sinus_16_pi_delta)
 {

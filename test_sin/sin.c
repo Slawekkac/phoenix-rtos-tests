@@ -116,6 +116,15 @@ TEST(test_sin, sinus_16_pi_delta)
 }
 
 /*
+Test function sin for radius angle = 64*Pi
+Expected value 0.0 but result is 
+*/
+TEST(test_sin, sinus_64_pi)
+{
+    TEST_ASSERT_EQUAL_DOUBLE(0.0, sin(64 * M_PI));
+}
+
+/*
 Test for float
 */
 
@@ -167,6 +176,7 @@ TEST_GROUP_RUNNER(test_sinus_with_normal_values)
     RUN_TEST_CASE(test_sin, sinus_8_pi_delta);
     RUN_TEST_CASE(test_sin, sinus_16_pi);
     RUN_TEST_CASE(test_sin, sinus_16_pi_delta);
+    RUN_TEST_CASE(test_sin, sinus_64_pi);
 }
 
 TEST_GROUP_RUNNER(test_fl_sinus_with_normal_values) 

@@ -39,7 +39,12 @@ TEST(test_sin, sinus_1_4_pi)
 
 TEST(test_sin, sinus_1_4_pi_t2)
 {
-    TEST_ASSERT_EQUAL_DOUBLE(0.70710678118654752440084436210485, sin(M_PI / 4.0));
+    double val1 = 0.70710678118654752440084436210485;
+    char buff_msg[128];
+
+    sprintf(buff_msg, "Value for sqrt(2)/2: %lf", val1);
+    TEST_MESSAGE(buff_msg);
+    TEST_ASSERT_EQUAL_DOUBLE(val1, sin(M_PI / 4.0));
 }
 
 

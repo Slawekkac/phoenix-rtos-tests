@@ -67,6 +67,16 @@ TEST(test_sin, sinus_1_2_pi)
     TEST_ASSERT_EQUAL_DOUBLE(1.0, sin(M_PI_2));
 }
 
+TEST(test_sin, sinus_78_100_pi)
+{
+    TEST_ASSERT_EQUAL_DOUBLE(0,63742398974868971017671281167602, sin(M_PI * 78 / 100));
+}
+
+TEST(test_sin, sinus_99_100_pi)
+{
+    TEST_ASSERT_EQUAL_DOUBLE(0,03141075907812829383918367381783, sin(M_PI * 99 / 100));
+}
+
 /*
 Test function sin for radius angle = Pi
 Expected value 0.0 but result is 1.2246468e-16
@@ -201,6 +211,8 @@ TEST_GROUP_RUNNER(test_sinus_with_normal_values)
     RUN_TEST_CASE(test_sin, sinus_1_3_pi);
     RUN_TEST_CASE(test_sin, sinus_1_3_pi_t2);
     RUN_TEST_CASE(test_sin, sinus_1_2_pi);
+    RUN_TEST_CASE(test_sin, sinus_78_100_pi);
+    RUN_TEST_CASE(test_sin, sinus_99_100_pi);
     RUN_TEST_CASE(test_sin, sinus_1_pi);
     RUN_TEST_CASE(test_sin, sinus_2_pi);
     RUN_TEST_CASE(test_sin, sinus_4_pi);

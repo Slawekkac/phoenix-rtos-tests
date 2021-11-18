@@ -61,6 +61,11 @@ TEST(test_sin, sinus_1_3_pi_t2)
     TEST_ASSERT_EQUAL_DOUBLE(0.86602540378443864676372317075294, sin(M_PI / 3.0));
 }
 
+TEST(test_sin, sinus_49_100_pi)
+{
+    TEST_ASSERT_EQUAL_DOUBLE(0.99950656036573155700069083670925, sin(M_PI * 49.0 / 100.0));
+}
+
 
 TEST(test_sin, sinus_1_2_pi)
 {

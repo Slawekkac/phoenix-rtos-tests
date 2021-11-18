@@ -47,7 +47,7 @@ TEST(test_sin, sinus_1_4_pi_t2)
     //sprintf(buff_msg, "Value for sqrt(2)/2: %lf", val1);
     //TEST_MESSAGE(buff_msg);
     fprintf(stderr, "Value for sqrt(2)/2: %lf\n", val1);
-    TEST_ASSERT_EQUAL_DOUBLE(val1, sin(M_PI / 4.0));
+    TEST_ASSERT_EQUAL_DOUBLE(val1, sin(M_PI_4));
 }
 
 
@@ -64,7 +64,7 @@ TEST(test_sin, sinus_1_3_pi_t2)
 
 TEST(test_sin, sinus_1_2_pi)
 {
-    TEST_ASSERT_EQUAL_DOUBLE(1.0, sin(M_PI / 2.0));
+    TEST_ASSERT_EQUAL_DOUBLE(1.0, sin(M_PI_2));
 }
 
 /*
@@ -137,7 +137,7 @@ TEST(test_sin, sinus_16_pi_delta)
 
 /*
 Test function sin for radius angle = 64*Pi
-Expected value 0.0 but result is 
+Expected value 0.0 but result is -7.83773951e-15
 */
 TEST(test_sin, sinus_64_pi)
 {
@@ -175,11 +175,21 @@ TEST(test_sin, sinus_1_2_pi_fl)
 
 /*
 Test function sin for radius angle = Pi
-Expected value 0.0 but result is 
+Expected value 0.0 but result is 1.22464685e-16
 */
 TEST(test_sin, sinus_1_pi_fl)
 {
     TEST_ASSERT_EQUAL_FLOAT(0.0, sin(M_PI));
+}
+
+TEST(test_sin, sinus_infinity)
+{
+    TEST_ASSERT_EQUAL_DOUBLE(NAN, sin(INFINITY));
+}
+
+TEST(test_sin, sinus_minus_infinity)
+{
+    TEST_ASSERT_EQUAL_DOUBLE(NAN, sin(-INFINITY));
 }
 
 TEST_GROUP_RUNNER(test_sinus_with_normal_values) 
@@ -212,10 +222,17 @@ TEST_GROUP_RUNNER(test_fl_sinus_with_normal_values)
     
 }
 
+TEST_GROUP_RUNNER(test_sinus_with_denormal_values) 
+{
+    RUN_TEST_CASE(test_sin, sinus_infinity);
+    RUN_TEST_CASE(test_sin, sinus_minus_infinity);
+}
+
 void runner(void)
 {
 	RUN_TEST_GROUP(test_sinus_with_normal_values);
     RUN_TEST_GROUP(test_fl_sinus_with_normal_values);
+    RUN_TEST_GROUP(test_sinus_with_denormal_values);
 }
 
 int main(int argc, char *argv[])
